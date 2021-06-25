@@ -1,1 +1,0 @@
-bwa mem -p -t 32 -M /ghess/groups/algorithms/ref/non_human_contaminants/raw_genomes/Genomev1_test/Gtest_hg_chicken_yeast_covid.fa.gz -v 2 DL19032524_R1.fastq DL19032524_R2.fastq | samtools view -b > DL19032524.bam

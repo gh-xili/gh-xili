@@ -3,7 +3,7 @@
 set -u	#### prevents the error by aborting the script if a variable’s value is unset
 set -o pipefail 	#### check on the p398 of book Bioinformatics Data Skills.
 ### functions.sh contains all modules and functions necessary in this pipeline, has to be together with run_main.sh
-source ~/Functions_xl.sh
+source ./Functions_xl.sh
 ## USAGE:
 #	nohup bash run_main.sh "Process_NAME" > out.log &
 ########################################################################
@@ -31,13 +31,24 @@ echo "-----------------------------------------------------------------"
 ## GLOBAL VARIABLES
 ########################################################################
 ### INPUT DIRECTORY
-__INPUT_PATH=/ghess/groups/algorithms/ref/non_human_contaminants/test_sample_cram/Raw_Fastq
+__HOME_PATH="/ghess/groups/algorithms/projects/non_human_contamination"
+
+__INPUT_PATH=/ghess/groups/algorithms/projects/non_human_contamination/test_sample_cram/cram
 ### Output DIRECTORY
-__OUTPUT_PATH=/ghess/groups/algorithms/ref/non_human_contaminants/test_sample_cram/Output
+__OUTPUT_PATH=/ghess/groups/algorithms/projects/non_human_contamination/test_sample_cram/cram
 __INPUT_SAMPLE_SET=(
-A017381551
-A017381552
-DL19032524
+A017383551 # No contamination sample
+A017383552 # No contamination sample
+A017383651 # No contamination sample
+A031438301 # Salmon
+#A017381551
+#A017381552
+#DL19032524
+#A0260122S1
+#DL19032527
+#A0186048MMC-02
+#A0261917HP4-05
+#A0261917PRE-05
 )
 #### Saving DIR Check and Create
 DIR_CHECK_CREATE ${__OUTPUT_PATH} ${__INPUT_PATH}
@@ -66,8 +77,13 @@ echo "Parallel Operation have started"
 for (( i = 0; i <= $(expr ${#__INPUT_SAMPLE_SET[*]} - 1); i++ ))  ### Loop Operation [Ref.1]
 do
 	#break
-	PRE_READS_DIR ${__INPUT_PATH} ${__INPUT_SAMPLE_SET[i]} 'fastq' 'Pair'
+	RUN_SAM2FASTQ ${__INPUT_SAMPLE_SET[i]} 'cram'
+	
+	PRE_READS_DIR ${__INPUT_PATH} ${__INPUT_SAMPLE_SET[i]} 'fastq.gz' 'Pair'
 	RUN_BWA_mem ${__INPUT_SAMPLE_SET[i]} ${SPECIES} ${Project_Name} ${Data_Provider} 'yes' & pid=$!
+	
+	#break
+	#RUN_Count_Non_hg38 ${__INPUT_SAMPLE_SET[i]}  "sam" & pid=$!
 	#PRE_READS_DIR ${__INPUT_SAMPLE_SET[i]} 'fq.gz' 'SRA'
 	#RUN_Trim_Galore_QC & pid=$!
 	#RUN_FAST_QC & pid=$!
@@ -108,6 +124,8 @@ echo "Parallel Operation have finished";
 	#if [ ${Alert_email} == 0 ];then
 	#EMAIL_ME "${Start_Date}" ${Process_NAME}
 	#fi
+	
+	echo "Start at ${Start_Date} " | mail -s "Project: + ${Process_NAME} Completed!" xili@guardanthealth.com
 }
 ##### Following Line is very IMPORTANT 
 main "$@"
