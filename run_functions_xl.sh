@@ -33,22 +33,22 @@ echo "-----------------------------------------------------------------"
 ### INPUT DIRECTORY
 __HOME_PATH="/ghess/groups/algorithms/projects/non_human_contamination"
 
-__INPUT_PATH=/ghess/groups/algorithms/projects/non_human_contamination/test_sample_cram/cram
+__INPUT_PATH=/ghess/groups/algorithms/projects/non_human_contamination/test_sample_cram/Output/BWA_Results/dev_stats/Raw_Fastq
 ### Output DIRECTORY
-__OUTPUT_PATH=/ghess/groups/algorithms/projects/non_human_contamination/test_sample_cram/cram
+__OUTPUT_PATH=/ghess/groups/algorithms/projects/non_human_contamination/test_sample_cram/Output/BWA_Results/dev_stats
 __INPUT_SAMPLE_SET=(
+A017381551
+A017381552
+DL19032524
+A0260122S1
+DL19032527
+A0186048MMC-02
+A0261917HP4-05
+A0261917PRE-05
 A017383551 # No contamination sample
 A017383552 # No contamination sample
 A017383651 # No contamination sample
 A031438301 # Salmon
-#A017381551
-#A017381552
-#DL19032524
-#A0260122S1
-#DL19032527
-#A0186048MMC-02
-#A0261917HP4-05
-#A0261917PRE-05
 )
 #### Saving DIR Check and Create
 DIR_CHECK_CREATE ${__OUTPUT_PATH} ${__INPUT_PATH}
@@ -63,7 +63,7 @@ echo "-----------------------------------------------------------------"
 echo "$(date "+%Y-%m-%d %H:%M") Start Processing....."
 ##....................................................................##
 ### Key Parameters
-SPECIES='nonhg'
+SPECIES='hg'
 Data_Provider='Ravi'
 Project_Name='Non_human_DNA'
 ##....................................................................##
@@ -77,7 +77,7 @@ echo "Parallel Operation have started"
 for (( i = 0; i <= $(expr ${#__INPUT_SAMPLE_SET[*]} - 1); i++ ))  ### Loop Operation [Ref.1]
 do
 	#break
-	RUN_SAM2FASTQ ${__INPUT_SAMPLE_SET[i]} 'cram'
+	#RUN_SAM2FASTQ ${__INPUT_SAMPLE_SET[i]} 'bam'
 	
 	PRE_READS_DIR ${__INPUT_PATH} ${__INPUT_SAMPLE_SET[i]} 'fastq.gz' 'Pair'
 	RUN_BWA_mem ${__INPUT_SAMPLE_SET[i]} ${SPECIES} ${Project_Name} ${Data_Provider} 'yes' & pid=$!

@@ -545,8 +545,8 @@ RUN_SAM2FASTQ(){
 	*)
 	echo "${FILE_TYPE} Go with default Setting."
 	x=$(find -name "*${INPUT_NAME}*.${FILE_TYPE}")
-	echo "samtools view -h -q 60 ${x} | samtools sort -@ 4 -n -u | samtools fastq > ${OUT_PATH}_R1.fastq.gz"
-	samtools view -h -q 60 ${x} | samtools sort -@ 4 -n -u | samtools fastq > ${OUT_PATH}_R1.fastq.gz
+	echo "samtools view -h -q 60 ${x} | samtools fastq > ${OUT_PATH}_R1.fastq.gz"
+	samtools view -h -q 60 ${x} | samtools fastq > ${OUT_PATH}_R1.fastq.gz
 	#exit
 	;;
 	esac
