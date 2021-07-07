@@ -94,7 +94,5 @@ def run():
 
 if __name__ == '__main__':
     # use this section to either run unit tests or execute as command line utility 
-    # get args
-    args = get_args()
-    Return_FRAG_from_path(args.input, 6)
+    run()
     
