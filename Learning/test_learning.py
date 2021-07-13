@@ -3,19 +3,16 @@ import os
 import argparse
 
 def test(_input):
+    """
+    Here is doc string?
+    """
+    
     print ("Input parameter is: " + _input)
     b = bytes([0x41, 0x42, 0x43, 0x44])
     s = "This is a string"
-    #print(b.decode('utf-8')+s)
+    print(b.decode('utf-8')+s)
     A="CN"
     B="US"
-
-    str1 = "From {0} to {1}".format(A, B)
-    print(str1)
-
-    tem2= Template("From ${A} to ${B}")
-    str2 = tem2.substitute(A=A, B=B)
-    print(str2)
 
     name_dic = {
         "A": "China",
@@ -36,8 +33,11 @@ def get_args():
 
 def run():
     # get args
-    args = get_args()
-    test(args.input)
+    
+   # args = get_args()
+    print (test.__doc__)
+    #test(args.input)
+    
     return None
 
 if __name__ == "__main__":
