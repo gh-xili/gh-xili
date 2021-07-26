@@ -6,6 +6,9 @@ import os
 import argparse
 
 def Add_multi_molecules(_df_tem):
+	"""
+    Add_multi_molecules
+    """
     df_tem = _df_tem
     df_tem.loc[:, "FRAGSIZE"] = df_tem.loc[:, "end"] - df_tem.loc[:, "start"]
     extra_read = []
@@ -17,6 +20,9 @@ def Add_multi_molecules(_df_tem):
     return pd.concat([df_tem, pd.DataFrame(extra_read)], axis=0)
 
 def Generate_Distribution_From_Table(_df_tem, _min, _max):
+	"""
+    Generate_Distribution_From_Table
+    """
     Min_Fragsize=_min
     Max_Fragsize=_max
     df_tem = _df_tem
@@ -29,6 +35,9 @@ def Generate_Distribution_From_Table(_df_tem, _min, _max):
     return Out_table
 
 def Process_chunk(_chunk):
+	"""
+    Process_chunk
+    """
     chunk_group = _chunk.groupby(by=["bin_idx"])
     Min_Fragsize=0
     Max_Fragsize=500
@@ -43,6 +52,9 @@ def Process_chunk(_chunk):
     return Out_idx, Out_Sum
 
 def Merge_ChunkResults(_df_out):
+	"""
+    Merge_ChunkResults
+    """
     df_out = _df_out
     df_out_dup = df_out.loc[df_out.index.duplicated(keep=False), :]
     if (df_out_dup.empty):
@@ -58,6 +70,9 @@ def Merge_ChunkResults(_df_out):
     return df_out
 
 def Return_FRAG_from_path(_path, _chunsize, _outpath):
+	"""
+    Return_FRAG_from_path
+    """
     Out_PATH = _outpath   #'/ghess/groups/algorithms/projects/Study_Fragment_Size/Counting_Table/FragSize_Distribution/'
     chunksize=10**_chunsize
     Min_Fragsize=0
@@ -90,6 +105,9 @@ def get_args():
     return parser.parse_args()
     
 def run():
+	"""
+    run
+    """
     # get args
     args = get_args()
     Return_FRAG_from_path(args.input, 6, args.output)

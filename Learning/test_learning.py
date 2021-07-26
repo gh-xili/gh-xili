@@ -31,6 +31,12 @@ def get_args():
                         help="Input File of .molucule.table")
     return parser.parse_args()
 
+def addition(*args):
+    result=0
+    for arg in args:
+        result += arg
+    return result
+
 def run():
     # get args
     
@@ -42,4 +48,6 @@ def run():
 
 if __name__ == "__main__":
     # use this section to either run unit tests or execute as command line utility 
-    run()
+    print(addition(1,2))
+    print(addition(*[1,2,3]))
+    #run()
